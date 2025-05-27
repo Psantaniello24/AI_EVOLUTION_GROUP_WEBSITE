@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Evolution Group - Transform Your Business with AI Chatbots</title>
+    <meta name="description" content="Professional AI chatbot solutions for customer acquisition and lead generation. Website integration, omnichannel support, and automated reactivation campaigns.">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0099cc;
+            --accent-color: #ff6b35;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --bg-section: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #333333;
+            --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            --gradient-accent: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            --shadow-card: 0 10px 30px rgba(0, 212, 255, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            filter: brightness(1.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23333" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-card);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background-color: var(--bg-section);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-color);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .pricing-tiers {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .pricing-tier {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-tier:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .tier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .tier-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .tier-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .tier-features {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .tier-features li {
+            padding: 0.25rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .tier-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Special Service Card */
+        .special-service {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.1) 100%);
+            border-color: var(--accent-color);
+        }
+
+        .special-service .service-icon {
+            background: var(--gradient-accent);
+        }
+
+        .special-service .tier-name {
+            color: var(--accent-color);
+        }
+
+        .special-service .tier-features li::before {
+            color: var(--accent-color);
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-item {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            background: var(--bg-section);
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .demo-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .demo-button {
+            display: inline-block;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-tiers {
+                gap: 1.5rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform-origin: left;
+            transform: scaleX(0);
+            z-index: 1001;
+            transition: transform 0.1s ease;
+        }
+
+        /* Demo Form Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .demo-form-modal {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .demo-form-modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: var(--bg-section);
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-section);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .submit-demo-form {
+            width: 100%;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-demo-form:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .submit-demo-form:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-success {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .success-message {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo.png" alt="AI Evolution Group Logo" class="logo-image">
+                <span>AI Evolution Group</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transform Your Business with AI-Powered Customer Acquisition</h1>
+            <p>Automate customer support, capture leads, and reactivate dormant prospects with our cutting-edge AI chatbot solutions. Scale your business while reducing operational costs.</p>
+            <a href="#services" class="cta-button">Explore Our Solutions</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Our AI Solutions</h2>
+                <p class="section-subtitle fade-in">Choose the perfect AI chatbot solution for your business needs. From website integration to omnichannel support and lead reactivation.</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Website AI Chatbot -->
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-globe"></i></div>
+                    <h3 class="service-title">Website AI Chatbot Integration</h3>
+                    <p class="service-description">Integrate intelligent chatbots directly into your website for 24/7 customer support and sales assistance. Boost conversions and reduce response times.</p>
+                    
+                    <div class="pricing-tiers">
+                        <div class="pricing-tier">
+                            <div class="tier-header">
+                                <span class="tier-name">Standard</span>
+                                <span class="tier-price">€50/month</span>
+                            </div>
+                            <ul class="tier-features">
+                                <li>Integrated chatbot for customer support</li>
+                                <li>Sales assistance automation</li>
+                                <li>Basic analytics dashboard</li>
+                                <li>Email support</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-tier">
+                            <div class="tier-header">
+                                <span class="tier-name">Premium</span>
+                                <span class="tier-price">€70/month</span>
+                            </div>
+                            <ul class="tier-features">
+                                <li>Everything in Standard</li>
+                                <li>Full access to all chat logs</li>
+                                <li>Advanced analytics & insights</li>
+                                <li>Priority support</li>
+                                <li>Custom integrations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Omnichannel AI Chatbot -->
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-comments"></i></div>
+                    <h3 class="service-title">Omnichannel AI Chatbot Integration</h3>
+                    <p class="service-description">Unify customer interactions across Instagram, Facebook, WhatsApp, and SMS with a single AI solution. Maintain consistent brand voice everywhere.</p>
+                    
+                    <div class="pricing-tiers">
+                        <div class="pricing-tier">
+                            <div class="tier-header">
+                                <span class="tier-name">Standard</span>
+                                <span class="tier-price">€70/month</span>
+                            </div>
+                            <ul class="tier-features">
+                                <li>Instagram & Facebook integration</li>
+                                <li>WhatsApp Business API</li>
+                                <li>SMS automation</li>
+                                <li>Unified inbox</li>
+                                <li>Basic reporting</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-tier">
+                            <div class="tier-header">
+                                <span class="tier-name">Premium</span>
+                                <span class="tier-price">€90/month</span>
+                            </div>
+                            <ul class="tier-features">
+                                <li>Everything in Standard</li>
+                                <li>Full access to chat logs</li>
+                                <li>Advanced conversation analytics</li>
+                                <li>Custom workflow automation</li>
+                                <li>Dedicated account manager</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Reactivation Campaigns -->
+                <div class="service-card special-service fade-in">
+                    <div class="service-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3 class="service-title">AI Reactivation Campaigns</h3>
+                    <p class="service-description">Breathe new life into your dormant lead database. Our AI analyzes and reactivates cold prospects with personalized, intelligent follow-up sequences.</p>
+                    
+                    <div class="pricing-tiers">
+                        <div class="pricing-tier">
+                            <div class="tier-header">
+                                <span class="tier-name">Performance-Based</span>
+                                <span class="tier-price">20% Revenue Share</span>
+                            </div>
+                            <ul class="tier-features">
+                                <li>No upfront costs</li>
+                                <li>AI-powered lead analysis</li>
+                                <li>Personalized reactivation sequences</li>
+                                <li>Multi-channel outreach</li>
+                                <li>Pay only for successful conversions</li>
+                                <li>Detailed ROI reporting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Lead Magnet Funnel -->
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-magnet"></i></div>
+                    <h3 class="service-title">AI Lead Magnet Funnel</h3>
+                    <p class="service-description">Design and deploy irresistible lead magnets that capture high-quality prospects. AI handles the entire follow-up process to maximize conversions.</p>
+                    
+                    <div class="pricing-tiers">
+                        <div class="pricing-tier">
+                            <div class="tier-header">
+                                <span class="tier-name">Complete Solution</span>
+                                <span class="tier-price">Custom Pricing</span>
+                            </div>
+                            <ul class="tier-features">
+                                <li>Lead magnet design & creation</li>
+                                <li>Landing page optimization</li>
+                                <li>AI-powered follow-up sequences</li>
+                                <li>Conversion tracking & analytics</li>
+                                <li>A/B testing & optimization</li>
+                                <li>Full funnel management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Why Choose AI Evolution Group?</h2>
+                <p class="section-subtitle fade-in">We deliver enterprise-grade AI solutions with the personal touch of a boutique agency. Your success is our mission.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="feature-title">Lightning Fast Setup</h3>
+                    <p class="feature-description">Get your AI chatbot up and running in under 24 hours. No technical expertise required on your end.</p>
+                </div>
+
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="feature-title">Conversion Optimized</h3>
+                    <p class="feature-description">Every interaction is designed to guide prospects through your sales funnel and maximize conversion rates.</p>
+                </div>
+
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3 class="feature-title">Advanced Analytics</h3>
+                    <p class="feature-description">Gain deep insights into customer behavior, conversation patterns, and ROI with our comprehensive reporting dashboard.</p>
+                </div>
+
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="feature-title">Enterprise Security</h3>
+                    <p class="feature-description">Bank-level encryption and GDPR compliance ensure your customer data is always protected and secure.</p>
+                </div>
+
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h3 class="feature-title">Continuously Learning</h3>
+                    <p class="feature-description">Our AI gets smarter with every interaction, improving response quality and conversion rates over time.</p>
+                </div>
+
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                    <h3 class="feature-title">Brand Customization</h3>
+                    <p class="feature-description">Fully customizable to match your brand voice, tone, and visual identity across all touchpoints.</p>
+                </div>
+
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 class="feature-title">Expert Leadership</h3>
+                    <p class="feature-description">Founded by an AI & Robotics Master's graduate with extensive research experience and proven track record at leading tech companies.</p>
+                </div>
+
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+                    <h3 class="feature-title">Scalable Solutions</h3>
+                    <p class="feature-description">Our AI infrastructure grows with your business, handling everything from startup volumes to enterprise-scale operations seamlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="demo-content fade-in">
+                <h2 class="demo-title">Ready to Transform Your Business?</h2>
+                <p class="demo-description">See how our AI solutions can revolutionize your customer acquisition and support processes. Book a personalized demo and discover the perfect solution for your business.</p>
+                <a href="#" class="demo-button" onclick="requestDemo()">Request Your Free Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Form Modal -->
+    <div class="modal-overlay" id="demoModal">
+        <div class="demo-form-modal">
+            <button class="close-modal" onclick="closeDemoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <h3 class="modal-title">Request Your Free Demo</h3>
+                <p class="modal-subtitle">Let's discuss how AI can transform your business</p>
+            </div>
+
+            <form id="demoForm" onsubmit="submitDemoForm(event)">
+                <div class="form-group">
+                    <label for="companyName" class="form-label">Company Name *</label>
+                    <input 
+                        type="text" 
+                        id="companyName" 
+                        name="companyName" 
+                        class="form-input" 
+                        placeholder="Enter your company name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="companyWebsite" class="form-label">Company Website</label>
+                    <input 
+                        type="url" 
+                        id="companyWebsite" 
+                        name="companyWebsite" 
+                        class="form-input" 
+                        placeholder="https://www.yourcompany.com"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address *</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="your.email@company.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number *</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        class="form-input" 
+                        placeholder="+1 (555) 123-4567"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="submit-demo-form" id="submitBtn">
+                    Request Demo
+                </button>
+            </form>
+
+            <!-- Success State (hidden by default) -->
+            <div class="form-success" id="successState" style="display: none;">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h3 class="success-title">Demo Request Sent!</h3>
+                <p class="success-message">
+                    Thank you for your interest! We'll contact you within 24 hours to schedule your personalized AI demo.
+                </p>
+                <button class="submit-demo-form" onclick="closeDemoModal()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 AI Evolution Group. All rights reserved. | Transforming businesses with intelligent automation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Update scroll indicator
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollIndicator.style.transform = `scaleX(${scrollPercent / 100})`;
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Demo request function
+        function requestDemo() {
+            // Open the demo modal
+            const modal = document.getElementById('demoModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Close demo modal function
+        function closeDemoModal() {
+            const modal = document.getElementById('demoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+            
+            // Reset form and hide success state
+            document.getElementById('demoForm').reset();
+            document.getElementById('demoForm').style.display = 'block';
+            document.getElementById('successState').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('demoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDemoModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDemoModal();
+            }
+        });
+
+        // Initialize EmailJS (add your public key here)
+        emailjs.init("R1DoNFR7zZmSDN2sz"); // Replace with your EmailJS public key
+
+        // Submit demo form function
+        function submitDemoForm(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('demoForm');
+            const successState = document.getElementById('successState');
+            
+            // Get form data
+            const formData = new FormData(form);
+            const data = {
+                company_name: formData.get('companyName'),
+                company_website: formData.get('companyWebsite') || 'Not provided',
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                to_email: 'aievolutiongroup@gmail.com' // Your receiving email
+            };
+            
+            // Disable submit button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // Send email using EmailJS
+            emailjs.send('service_fni8a8q', 'template_vx8yxgc', data)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+                    
+                    // Show success state
+                    form.style.display = 'none';
+                    successState.style.display = 'block';
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Request Demo';
+                    
+                }, function(error) {
+                    console.error('Email sending failed:', error);
+                    
+                    // Fallback to mailto if EmailJS fails
+                    const emailSubject = `Demo Request from ${data.company_name}`;
+                    const emailBody = `
+New Demo Request:
+
+Company Name: ${data.company_name}
+Company Website: ${data.company_website}
+Email: ${data.email}
+Phone: ${data.phone}
+
+Please contact this prospect to schedule their AI demo.
+
+Best regards,
+AI Evolution Group Website
+                    `.trim();
+                    
+                    const mailtoLink = `mailto:aievolutiongroup@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                    window.location.href = mailtoLink;
+                    
+                    // Show success state anyway
+                    form.style.display = 'none';
+                    successState.style.display = 'block';
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Request Demo';
+                    
+                    alert('Email service temporarily unavailable. Please check your email client for the demo request.');
+                });
+        }
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add interactive hover effects for feature cards
+        document.querySelectorAll('.feature-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            
+            if (hero) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Add typing effect to hero title (optional enhancement)
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', () => {
+            const heroTitle = document.querySelector('.hero h1');
+            const originalText = heroTitle.textContent;
+            
+            // Uncomment the line below to enable typing effect
+            // typeWriter(heroTitle, originalText, 50);
+        });
+
+        // Add click tracking for analytics (placeholder)
+        document.querySelectorAll('.cta-button, .demo-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Track button clicks for analytics
+                console.log('CTA clicked:', this.textContent);
+                
+                // In a real implementation, you would send this data to your analytics service
+                // gtag('event', 'click', { 'event_category': 'CTA', 'event_label': this.textContent });
+            });
+        });
+    </script>
+    <!-- Add this to your HTML page, preferably before the closing </body> tag -->
+    <script src="https://testmyprompt.com/widget/6835beb443843d7b0a03db25/widget.js"></script>
+    <script>
+    // Initialize the widget after the script loads
+    document.addEventListener('DOMContentLoaded', function() {
+        window.AIChatWidget.init({
+        widgetId: "6835beb443843d7b0a03db25"
+        });
+    });
+    </script>
+</body>
+</html> 
