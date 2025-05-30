@@ -110,6 +110,82 @@
             color: var(--primary-color);
         }
 
+        /* Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: var(--bg-section);
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-toggle.active {
+            color: var(--primary-color);
+        }
+
+        /* Mobile Navigation Styles */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem;
+                font-size: 1.1rem;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                background: var(--bg-card);
+                color: var(--primary-color);
+            }
+
+            /* Adjust logo size for mobile */
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo-image {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -528,10 +604,12 @@
 
             .services-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .pricing-tiers {
@@ -544,6 +622,86 @@
 
             .container {
                 padding: 0 1rem;
+            }
+
+            /* Improve mobile touch targets */
+            .cta-button, .demo-button {
+                padding: 1.25rem 2.5rem;
+                font-size: 1rem;
+                min-height: 48px; /* Minimum touch target size */
+            }
+
+            /* Mobile hero adjustments */
+            .hero {
+                padding: 2rem 0;
+                min-height: 80vh;
+            }
+
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            /* Mobile service cards */
+            .service-card, .feature-item {
+                padding: 2rem 1.5rem;
+            }
+
+            /* Mobile form improvements */
+            .demo-form-modal {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+                max-width: calc(100% - 2rem);
+            }
+
+            .form-input {
+                padding: 1.25rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .submit-demo-form {
+                padding: 1.25rem 2rem;
+                min-height: 48px;
+            }
+
+            /* Mobile section headers */
+            .section-header {
+                margin-bottom: 2.5rem;
+            }
+
+            /* Mobile demo section */
+            .demo-section {
+                padding: 4rem 0;
+            }
+
+            .demo-content {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .service-card, .feature-item {
+                padding: 1.5rem 1rem;
+            }
+
+            .demo-form-modal {
+                padding: 1.5rem 1rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
             }
         }
 
@@ -741,10 +899,16 @@
                 <img src="logo.png" alt="AI Evolution Group Logo" class="logo-image">
                 <span>AI Evolution Group</span>
             </div>
-            <ul class="nav-links">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#demo">Demo</a></li>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
+                <li><a href="#features" onclick="closeMobileMenu()">Features</a></li>
+                <li><a href="#demo" onclick="closeMobileMenu()">Demo</a></li>
             </ul>
         </div>
     </nav>
@@ -1273,6 +1437,54 @@ AI Evolution Group Website
                 // In a real implementation, you would send this data to your analytics service
                 // gtag('event', 'click', { 'event_category': 'CTA', 'event_label': this.textContent });
             });
+        });
+
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const menuIcon = menuToggle.querySelector('i');
+            
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            
+            // Change icon between hamburger and X
+            if (navLinks.classList.contains('active')) {
+                menuIcon.className = 'fas fa-times';
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                menuIcon.className = 'fas fa-bars';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const menuIcon = menuToggle.querySelector('i');
+            
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const navbar = document.querySelector('.navbar');
+            
+            if (!navbar.contains(event.target) && navLinks.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu on window resize (if switching to desktop)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
         });
     </script>
     <!-- Add this to your HTML page, preferably before the closing </body> tag -->
