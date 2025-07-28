@@ -17,10 +17,6 @@
         {
           "type": "host",
           "value": "www.aievolutiongroup.com"
-        },
-        {
-          "type": "scheme",
-          "value": "http"
         }
       ],
       "destination": "https://www.aievolutiongroup.com/:path*",
