@@ -1,3 +1,4 @@
+
 {
   "redirects": [
     {
@@ -5,10 +6,6 @@
       "destination": "/",
       "permanent": true
     }
-  ]
-}
-{
-  "redirects": [
     {
       "source": "http://aievolutiongroup.com/:path*",
       "destination": "https://www.aievolutiongroup.com/:path*",
