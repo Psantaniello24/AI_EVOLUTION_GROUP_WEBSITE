@@ -7,3 +7,22 @@
     }
   ]
 }
+{
+  "redirects": [
+    {
+      "source": "http://aievolutiongroup.com/:path*",
+      "destination": "https://www.aievolutiongroup.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "http://www.aievolutiongroup.com/:path*",
+      "destination": "https://www.aievolutiongroup.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "https://aievolutiongroup.com/:path*",
+      "destination": "https://www.aievolutiongroup.com/:path*",
+      "permanent": true
+    }
+  ]
+}
