@@ -1,22 +1,28 @@
 {
   "redirects": [
     {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "http://aievolutiongroup.com/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "aievolutiongroup.com"
+        }
+      ],
       "destination": "https://www.aievolutiongroup.com/:path*",
       "permanent": true
     },
     {
-      "source": "http://www.aievolutiongroup.com/:path*",
-      "destination": "https://www.aievolutiongroup.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "https://aievolutiongroup.com/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aievolutiongroup.com"
+        },
+        {
+          "type": "scheme",
+          "value": "http"
+        }
+      ],
       "destination": "https://www.aievolutiongroup.com/:path*",
       "permanent": true
     }
