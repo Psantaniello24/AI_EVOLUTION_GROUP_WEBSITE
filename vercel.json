@@ -1,12 +1,13 @@
 {
   "redirects": [
     {
-      "source": "http://aievolutiongroup.com/:path*",
-      "destination": "https://www.aievolutiongroup.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "https://aievolutiongroup.com/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "aievolutiongroup.com"
+        }
+      ],
       "destination": "https://www.aievolutiongroup.com/:path*",
       "permanent": true
     }
